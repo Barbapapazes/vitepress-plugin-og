@@ -1,6 +1,6 @@
-import type { Options } from '../src/types'
+import type { Options } from '../src/types.js'
 import { describe, expect, it } from 'vitest'
-import { resolveOptions } from '../src/options'
+import { resolveOptions } from '../src/options.js'
 
 describe('resolveOptions', () => {
   it('should return default options when only domain is provided', () => {

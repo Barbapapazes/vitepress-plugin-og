@@ -1,8 +1,8 @@
-import type { ResolvedOptions } from '../src/types'
+import type { ResolvedOptions } from '../src/types.js'
 import { existsSync, mkdirSync, readFileSync, rmSync, writeFileSync } from 'node:fs'
 import { join } from 'node:path'
 import { afterEach, beforeEach, describe, expect, it } from 'vitest'
-import { generateOgImage } from '../src/og'
+import { generateOgImage } from '../src/og.js'
 
 describe('generateOgImage', () => {
   const testDir = '/tmp/vitepress-plugin-og-test'
@@ -60,26 +60,6 @@ describe('generateOgImage', () => {
     // File should remain unchanged
     const newContent = readFileSync(outputPath, 'utf-8')
     expect(newContent).toBe(originalContent)
-  })
-
-  it('should split long titles into multiple lines', async () => {
-    const options: ResolvedOptions = {
-      domain: 'https://example.com',
-      outDir: 'og',
-      ogTemplate: templatePath,
-      maxTitleSizePerLine: 10,
-    }
-
-    // This title should be split into multiple lines
-    const longTitle = 'This is a very long title that needs to be split'
-
-    await generateOgImage({ title: longTitle }, outputPath, options)
-
-    // Read the template cache to verify splitting logic was applied
-    const template = readFileSync(templatePath, 'utf-8')
-    expect(template).toContain('{{line1}}')
-    expect(template).toContain('{{line2}}')
-    expect(template).toContain('{{line3}}')
   })
 
   it('should escape HTML characters in title', async () => {

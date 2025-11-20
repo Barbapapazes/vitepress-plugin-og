@@ -1,7 +1,7 @@
 import type { PageData } from 'vitepress'
-import type { ResolvedOptions } from '../src/types'
+import type { ResolvedOptions } from '../src/types.js'
 import { describe, expect, it } from 'vitest'
-import { addHead } from '../src/head'
+import { addHead } from '../src/head.js'
 
 describe('addHead', () => {
   it('should add OG image meta tags to page head', () => {
@@ -37,7 +37,7 @@ describe('addHead', () => {
     addHead('test-page.png', pageData, options)
 
     const ogImageMeta = pageData.frontmatter.head?.find(
-      ([tag, attrs]) => tag === 'meta' && attrs.property === 'og:image',
+      ([tag, attrs]: [string, Record<string, string>]) => tag === 'meta' && attrs.property === 'og:image',
     )
 
     expect(ogImageMeta).toBeDefined()
@@ -59,10 +59,10 @@ describe('addHead', () => {
     addHead('test-page.png', pageData, options)
 
     const twitterImageMeta = pageData.frontmatter.head?.find(
-      ([tag, attrs]) => tag === 'meta' && attrs.name === 'twitter:image',
+      ([tag, attrs]: [string, Record<string, string>]) => tag === 'meta' && attrs.name === 'twitter:image',
     )
     const twitterCardMeta = pageData.frontmatter.head?.find(
-      ([tag, attrs]) => tag === 'meta' && attrs.name === 'twitter:card',
+      ([tag, attrs]: [string, Record<string, string>]) => tag === 'meta' && attrs.name === 'twitter:card',
     )
 
     expect(twitterImageMeta).toBeDefined()
@@ -86,13 +86,13 @@ describe('addHead', () => {
     addHead('test-page.png', pageData, options)
 
     const widthMeta = pageData.frontmatter.head?.find(
-      ([tag, attrs]) => tag === 'meta' && attrs.property === 'og:image:width',
+      ([tag, attrs]: [string, Record<string, string>]) => tag === 'meta' && attrs.property === 'og:image:width',
     )
     const heightMeta = pageData.frontmatter.head?.find(
-      ([tag, attrs]) => tag === 'meta' && attrs.property === 'og:image:height',
+      ([tag, attrs]: [string, Record<string, string>]) => tag === 'meta' && attrs.property === 'og:image:height',
     )
     const typeMeta = pageData.frontmatter.head?.find(
-      ([tag, attrs]) => tag === 'meta' && attrs.property === 'og:image:type',
+      ([tag, attrs]: [string, Record<string, string>]) => tag === 'meta' && attrs.property === 'og:image:type',
     )
 
     expect(widthMeta?.[1].content).toBe('1200')
@@ -101,13 +101,13 @@ describe('addHead', () => {
   })
 
   it('should preserve existing head entries', () => {
-    const pageData: PageData = {
+    const pageData = {
       frontmatter: {
         head: [
           ['meta', { name: 'description', content: 'Test description' }],
         ],
       },
-    } as PageData
+    }
 
     const options: ResolvedOptions = {
       domain: 'https://example.com',
@@ -116,7 +116,7 @@ describe('addHead', () => {
       maxTitleSizePerLine: 30,
     }
 
-    addHead('test-page.png', pageData, options)
+    addHead('test-page.png', pageData as any, options)
 
     expect(pageData.frontmatter.head).toHaveLength(7) // 1 existing + 6 new
     expect(pageData.frontmatter.head?.[0]).toEqual(['meta', { name: 'description', content: 'Test description' }])
@@ -137,7 +137,7 @@ describe('addHead', () => {
     addHead('test-page.png', pageData, options)
 
     const ogImageMeta = pageData.frontmatter.head?.find(
-      ([tag, attrs]) => tag === 'meta' && attrs.property === 'og:image',
+      ([tag, attrs]: [string, Record<string, string>]) => tag === 'meta' && attrs.property === 'og:image',
     )
 
     expect(ogImageMeta?.[1].content).toBe('https://example.com/custom-images/test-page.png')
