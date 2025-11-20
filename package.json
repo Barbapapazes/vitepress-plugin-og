@@ -36,6 +36,8 @@
     "lint": "eslint",
     "lint:fix": "eslint --fix",
     "build": "tsdown",
+    "test": "vitest",
+    "test:ui": "vitest --ui",
     "prepack": "pnpm run build",
     "release": "bumpp --sign"
   },
@@ -50,10 +52,12 @@
     "@antfu/eslint-config": "^6.2.0",
     "@tsconfig/node20": "^20.1.8",
     "@types/node": "^24.10.1",
+    "@vitest/ui": "^4.0.12",
     "bumpp": "^10.3.1",
     "eslint": "^9.38.0",
     "taze": "^19.9.0",
     "tsdown": "^0.16.6",
-    "typescript": "^5.9.3"
+    "typescript": "^5.9.3",
+    "vitest": "^4.0.12"
   }
 }
