@@ -64,7 +64,4 @@ jobs:
 
       - run: pnpm install --frozen-lockfile
       - run: pnpm run build
-      - run: pnpm dlx pkg-pr-new publish
-        working-directory: packages/vitepress-plugin-og
-      - run: pnpm dlx pkg-pr-new publish
-        working-directory: packages/rspress-plugin-og
+      - run: pnpm dlx pkg-pr-new publish './packages/*'
