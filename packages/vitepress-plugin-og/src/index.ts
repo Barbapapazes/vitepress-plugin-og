@@ -1,8 +1,8 @@
 import type { PageData, TransformPageContext } from 'vitepress'
 import type { Options } from './types.js'
 import { join } from 'node:path'
+import { generateOgImage } from '@og/core/og.js'
 import { addHead } from './head.js'
-import { generateOgImage } from './og.js'
 import { resolveOptions } from './options.js'
 
 export async function addOgImage(pageData: PageData, context: TransformPageContext, userOptions: Options): Promise<void> {

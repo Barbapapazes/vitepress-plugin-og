@@ -24,7 +24,7 @@ jobs:
           cache: pnpm
 
       - run: pnpm install --frozen-lockfile
-      - run: pnpm run build
+      - run: pnpm run -r build
 
   lint:
     runs-on: ubuntu-latest
@@ -50,7 +50,7 @@ jobs:
           cache: pnpm
 
       - run: pnpm install --frozen-lockfile
-      - run: pnpm test -- --run
+      - run: pnpm run -r test
 
   continuous-release:
     runs-on: ubuntu-latest
@@ -63,5 +63,8 @@ jobs:
           cache: pnpm
 
       - run: pnpm install --frozen-lockfile
-      - run: pnpm run build
+      - run: pnpm run -r build
       - run: pnpm dlx pkg-pr-new publish
+        working-directory: packages/vitepress-plugin-og
+      - run: pnpm dlx pkg-pr-new publish
+        working-directory: packages/rspress-plugin-og

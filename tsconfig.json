@@ -1,14 +1,17 @@
 {
   "extends": "@tsconfig/node20",
   "compilerOptions": {
+    "baseUrl": ".",
+    "paths": {
+      "@og/core/*": [
+        "packages/core/src/*"
+      ]
+    },
     "types": [
       "node"
-    ],
-    "declaration": true,
-    "isolatedDeclarations": true
+    ]
   },
   "include": [
-    "src",
-    "tests"
+    "packages"
   ]
 }

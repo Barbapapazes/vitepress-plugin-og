@@ -6,8 +6,10 @@
     "build": "vitepress build",
     "preview": "vitepress preview"
   },
+  "dependencies": {
+    "vitepress-plugin-og": "link:../../packages/vitepress-plugin-og"
+  },
   "devDependencies": {
-    "vitepress": "^1.6.4",
-    "vitepress-plugin-og": "link:.."
+    "vitepress": "^1.6.4"
   }
 }

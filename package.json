@@ -1,63 +1,21 @@
 {
-  "name": "vitepress-plugin-og",
   "type": "module",
-  "version": "0.0.3",
+  "private": true,
   "packageManager": "pnpm@10.22.0+sha512.bf049efe995b28f527fd2b41ae0474ce29186f7edcb3bf545087bd61fbbebb2bf75362d1307fda09c2d288e1e499787ac12d4fcb617a974718a6051f2eee741c",
-  "description": "Automatically generate Open Graph images for your VitePress pages.",
-  "author": "Estéban Soubiran <esteban@soubiran.dev>",
-  "license": "MIT",
-  "funding": "https://github.com/sponsors/Barbapapazes",
-  "homepage": "https://github.com/Barbapapazes/vitepress-plugin-og",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/Barbapapazes/vitepress-plugin-og"
-  },
-  "bugs": "https://github.com/Barbapapazes/vitepress-plugin-og/issues",
-  "exports": {
-    ".": {
-      "types": "./dist/index.d.mts",
-      "import": "./dist/index.mjs"
-    },
-    "./types": {
-      "types": "./dist/types.d.mts",
-      "import": "./dist/types.mjs"
-    },
-    "./*": "./*"
-  },
-  "main": "dist/index.mjs",
-  "types": "dist/index.d.mts",
-  "files": [
-    "dist"
-  ],
-  "engines": {
-    "node": ">=20"
-  },
   "scripts": {
     "lint": "eslint",
     "lint:fix": "eslint --fix",
-    "build": "tsdown",
-    "test": "vitest",
-    "test:ui": "vitest --ui",
-    "prepack": "pnpm run build",
-    "release": "bumpp --sign"
-  },
-  "peerDependencies": {
-    "vitepress": "^1.6.4"
-  },
-  "dependencies": {
-    "sharp": "^0.34.5",
-    "ufo": "^1.6.1"
+    "build": "pnpm run -r build",
+    "test": "pnpm run -r test",
+    "release": "bumpp"
   },
   "devDependencies": {
     "@antfu/eslint-config": "^6.2.0",
     "@tsconfig/node20": "^20.1.8",
     "@types/node": "^24.10.1",
-    "@vitest/ui": "^4.0.12",
     "bumpp": "^10.3.1",
     "eslint": "^9.38.0",
     "taze": "^19.9.0",
-    "tsdown": "^0.16.6",
-    "typescript": "^5.9.3",
-    "vitest": "^4.0.12"
+    "typescript": "^5.9.3"
   }
 }

@@ -1,0 +1,13 @@
+{
+  "type": "module",
+  "private": true,
+  "scripts": {
+    "test": "vitest"
+  },
+  "devDependencies": {
+    "vitest": "^4.0.12"
+  },
+  "dependencies": {
+    "sharp": "^0.34.5"
+  }
+}
