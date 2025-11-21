@@ -1,4 +1,4 @@
-import type { ResolvedOptions } from '../../vitepress-plugin-og/src/types.js'
+import type { ResolvedOptions } from './types.js'
 import { Buffer } from 'node:buffer'
 import { existsSync, mkdirSync, readFileSync } from 'node:fs'
 import { dirname } from 'node:path'

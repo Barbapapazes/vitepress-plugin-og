@@ -40,12 +40,12 @@
     "@rspress/shared": "^1.46.1",
     "rspress": "^1.46.1"
   },
-  "devDependencies": {
-    "tsdown": "^0.16.6",
-    "vitest": "^4.0.12"
-  },
   "dependencies": {
     "sharp": "^0.34.5",
     "ufo": "^1.6.1"
+  },
+  "devDependencies": {
+    "tsdown": "^0.16.6",
+    "vitest": "^4.0.12"
   }
 }

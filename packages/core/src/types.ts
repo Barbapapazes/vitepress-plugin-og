@@ -15,4 +15,13 @@ export interface Options {
    * @default 30
    */
   maxTitleSizePerLine?: number
+  /**
+   * The path to the OG image template file.
+   *
+   * @default '.vitepress/og-template.svg' for VitePress
+   * @default 'og-template.svg' for Rspress
+   */
+  ogTemplate?: string
 }
+
+export interface ResolvedOptions extends Required<Options> {}

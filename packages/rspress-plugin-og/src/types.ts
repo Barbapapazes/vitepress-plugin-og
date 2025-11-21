@@ -1,12 +1,5 @@
-import type { Options as CoreOptions } from '@og/core/types.js'
+import type { Options as CoreOptions, ResolvedOptions as CoreResolvedOptions } from '@og/core/types.js'
 
-export interface Options extends CoreOptions {
-  /**
-   * The path to the OG image template file.
-   *
-   * @default 'og-template.svg'
-   */
-  ogTemplate?: string
-}
+export interface Options extends CoreOptions {}
 
-export interface ResolvedOptions extends Required<Options> {}
+export interface ResolvedOptions extends CoreResolvedOptions {}

@@ -5,7 +5,7 @@
   "scripts": {
     "lint": "eslint",
     "lint:fix": "eslint --fix",
-    "build": "pnpm run -r build",
+    "build": "pnpm run --filter vitepress-plugin-og --filter rspress-plugin-og -r build",
     "test": "pnpm run -r test",
     "release": "bumpp"
   },

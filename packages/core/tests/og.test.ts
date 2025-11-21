@@ -1,8 +1,8 @@
-import type { ResolvedOptions } from '../src/types.js'
+import type { ResolvedOptions } from '@og/core/types.js'
 import { existsSync, mkdirSync, readFileSync, rmSync, writeFileSync } from 'node:fs'
 import { join } from 'node:path'
 import { afterEach, beforeEach, describe, expect, it } from 'vitest'
-import { generateOgImage } from '../../core/src/og.js'
+import { generateOgImage } from '../src/og.js'
 
 describe('generateOgImage', () => {
   const testDir = '/tmp/vitepress-plugin-og-test'

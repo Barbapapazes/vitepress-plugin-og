@@ -12,7 +12,7 @@ it('should return default options when only domain is provided', () => {
   expect(resolved).toEqual({
     domain: 'https://example.com',
     outDir: 'og',
-    ogTemplate: '.vitepress/og-template.svg',
+    ogTemplate: 'og-template.svg',
     maxTitleSizePerLine: 30,
   })
 })
