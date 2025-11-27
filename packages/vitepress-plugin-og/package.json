@@ -1,7 +1,7 @@
 {
   "name": "vitepress-plugin-og",
   "type": "module",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "description": "Automatically generate Open Graph images for your VitePress pages.",
   "author": "Estéban Soubiran <esteban@soubiran.dev>",
   "license": "MIT",
