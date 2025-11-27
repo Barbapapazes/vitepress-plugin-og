@@ -20,5 +20,6 @@ export async function addOgImage(pageData: PageData, context: TransformPageConte
 
   await generateOgImage({ title }, imagePath, options)
 
-  addHead(imageName, pageData, options)
+  const base = context.siteConfig.site.base
+  addHead(imageName, pageData, options, base)
 }
