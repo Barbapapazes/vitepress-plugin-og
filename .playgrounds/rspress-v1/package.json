@@ -7,7 +7,7 @@
     "preview": "rspress preview"
   },
   "dependencies": {
-    "@rspress/core": "2.0.0-rc.1",
+    "rspress": "^1.40.2",
     "rspress-plugin-og": "link:../../packages/rspress-plugin-og"
   },
   "devDependencies": {
