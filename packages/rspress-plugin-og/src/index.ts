@@ -1,13 +1,18 @@
-import type { PageIndexInfo, RspressPlugin } from '@rspress/shared'
+import type { PageIndexInfo, RspressPlugin } from '@rspress/core'
 import type { Options } from './types.js'
-import { join } from 'node:path'
+import { join, relative } from 'node:path'
+import { cwd } from 'node:process'
 import { createOgImageHead, createOgImageHeightHead, createOgImageTypeHead, createOgImageWidthHead, createTwitterCardHead, createTwitterImageHead } from '@og/core/head.js'
 import { generateOgImage } from '@og/core/og.js'
 import { slugifyPath } from '@og/core/utils.js'
+import { logger } from 'rslog'
 import { joinURL } from 'ufo'
 import { resolveOptions } from './options.js'
 
-export default function (userOptions: Options): RspressPlugin {
+const NAME = 'rspress-plugin-og'
+const LOG_PREFIX = `[${NAME}]`
+
+export default function (userOptions: Options) {
   const options = resolveOptions(userOptions)
 
   const images = new Map<string, { title: string, imageName: string, imageUrl: string }>()
@@ -22,7 +27,7 @@ export default function (userOptions: Options): RspressPlugin {
   ]
 
   return {
-    name: 'rspress-plugin-og',
+    name: NAME,
     config(config) {
       const originalHead = config.head || []
       config.head = [
@@ -41,7 +46,7 @@ export default function (userOptions: Options): RspressPlugin {
     extendPageData: (pageData: PageIndexInfo) => {
       const title = pageData.frontmatter.title || pageData.title
       if (!title) {
-        console.warn(`[rspress-plugin-og] Cannot generate OG image for page without title: ${pageData._relativePath}`)
+        logger.warn(`${LOG_PREFIX} Cannot generate OG image for page without title: ${pageData._relativePath}`)
         return
       }
 
@@ -53,11 +58,16 @@ export default function (userOptions: Options): RspressPlugin {
         imageUrl: joinURL(options.domain, options.outDir, imageName),
       })
     },
-    async beforeBuild(config) {
+    async afterBuild(config) {
+      const outputFolder = join(cwd(), config.outDir ?? 'doc_build', options.outDir)
+      logger.info(`${LOG_PREFIX} Generating OG images to ${relative(cwd(), outputFolder)} ...`)
       await Promise.all(
-        Array.from(images.entries()).map(([_, { title, imageName }]) =>
-          generateOgImage({ title }, join(config.root ?? '', options.outDir, imageName), options)),
+        Array.from(images.entries()).map(([_, { title, imageName }]) => {
+          return generateOgImage({ title }, join(outputFolder, imageName), options)
+        },
+        ),
       )
+      logger.success(`${LOG_PREFIX} ${images.size} OG images generated.`)
     },
-  }
+  } satisfies RspressPlugin
 }

@@ -21,6 +21,26 @@ pnpm add -D rspress-plugin-og
 
 Add the plugin to your Rspress configuration file (`rspress.config.ts`):
 
+For Rspress v2:
+
+```ts
+import { defineConfig } from '@rspress/core'
+import pluginOg from 'rspress-plugin-og'
+
+export default defineConfig({
+  plugins: [
+    pluginOg({
+      domain: 'https://example.com',
+      // ...other options
+    }),
+  ],
+})
+```
+
+For Rspress v1:
+
+This is a plugin that is compatible with both V2 and V1, but when used in V1, there may be type errors.
+
 ```ts
 import pluginOg from 'rspress-plugin-og'
 import { defineConfig } from 'rspress/config'
@@ -30,7 +50,7 @@ export default defineConfig({
     pluginOg({
       domain: 'https://example.com',
       // ...other options
-    }),
+    }) as any,
   ],
 })
 ```
