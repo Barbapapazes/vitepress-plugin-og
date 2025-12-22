@@ -70,26 +70,19 @@ export async function generateOgImage(
 }
 
 function createTextLayerSvg(template: string, data: Record<string, string>): string {
-  let textSvg = template.replace(/\{\{([^}]+)\}\}/g, (_, name) => data[name] || '')
+  // Extract only <text> elements that contain {{xxx}} placeholders
+  const textElements = template.match(/<text[^>]*>[\s\S]*?<\/text>/g) || []
+  const textWithPlaceholders = textElements.filter(element => /\{\{[^}]+\}\}/.test(element))
 
-  textSvg = textSvg
+  // Replace placeholders with actual data
+  const processedText = textWithPlaceholders.map(element =>
+    element.replace(/\{\{([^}]+)\}\}/g, (_, name) => data[name] || ''),
 
-    .replace(/<rect[^>]*\/>/g, '')
-    .replace(/<rect[^>]*>[\s\S]*?<\/rect>/g, '')
-
-    .replace(/<pattern[^>]*>[\s\S]*?<\/pattern>/g, '')
-
-    .replace(/<linearGradient[^>]*>[\s\S]*?<\/linearGradient>/g, '')
-
-    .replace(/<clipPath[^>]*>[\s\S]*?<\/clipPath>/g, '')
-
-    .replace(/<image[^>]*\/>/g, '')
-    .replace(/<image[^>]*>[\s\S]*?<\/image>/g, '')
-
-  textSvg = textSvg.replace(
-    /<svg([^>]*)>/,
-    '<svg$1 style="background: transparent;">',
   )
+
+  // Create a new SVG with only text elements that had placeholders
+  const svgHeader = template.match(/<svg[^>]*>/)?.[0] || '<svg>'
+  const textSvg = `${svgHeader}${processedText.join('')}</svg>`
 
   return textSvg
 }
