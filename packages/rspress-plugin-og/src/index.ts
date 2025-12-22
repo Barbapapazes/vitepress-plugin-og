@@ -1,6 +1,7 @@
 import type { PageIndexInfo, RspressPlugin } from '@rspress/core'
-import type { Options } from './types.js'
+import type { Options, ResolvedOptions } from './types.js'
 import { join, relative } from 'node:path'
+import { performance } from 'node:perf_hooks'
 import { cwd } from 'node:process'
 import { createOgImageHead, createOgImageHeightHead, createOgImageTypeHead, createOgImageWidthHead, createTwitterCardHead, createTwitterImageHead } from '@og/core/head.js'
 import { generateOgImage } from '@og/core/og.js'
@@ -12,8 +13,8 @@ import { resolveOptions } from './options.js'
 const NAME = 'rspress-plugin-og'
 const LOG_PREFIX = `[${NAME}]`
 
-export default function (userOptions: Options) {
-  const options = resolveOptions(userOptions)
+export default function (userOptions: Options): RspressPlugin {
+  let options: ResolvedOptions
 
   const images = new Map<string, { title: string, imageName: string, imageUrl: string }>()
 
@@ -28,7 +29,8 @@ export default function (userOptions: Options) {
 
   return {
     name: NAME,
-    config(config) {
+    async config(config) {
+      options = await resolveOptions(userOptions)
       const originalHead = config.head || []
       config.head = [
         ...originalHead,
@@ -61,13 +63,15 @@ export default function (userOptions: Options) {
     async afterBuild(config) {
       const outputFolder = join(cwd(), config.outDir ?? 'doc_build', options.outDir)
       logger.info(`${LOG_PREFIX} Generating OG images to ${relative(cwd(), outputFolder)} ...`)
+      const start = performance.now()
       await Promise.all(
         Array.from(images.entries()).map(([_, { title, imageName }]) => {
           return generateOgImage({ title }, join(outputFolder, imageName), options)
         },
         ),
       )
-      logger.success(`${LOG_PREFIX} ${images.size} OG images generated.`)
+      const duration = (performance.now() - start) / 1000
+      logger.success(`${LOG_PREFIX} ${images.size} OG images generated in ${duration.toFixed(2)}s.`)
     },
   } satisfies RspressPlugin
 }
