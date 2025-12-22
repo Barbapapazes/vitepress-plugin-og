@@ -5,6 +5,7 @@ import { dirname } from 'node:path'
 import sharp from 'sharp'
 
 const templates = new Map<string, string>()
+const baseImages = new Map<string, Buffer>()
 
 function escapeHtml(unsafe: string) {
   return unsafe
@@ -29,6 +30,15 @@ export async function generateOgImage(
   }
   const ogTemplate = templates.get(options.ogTemplate)!
 
+  if (!baseImages.has(options.ogTemplate)) {
+    const baseSvg = ogTemplate.replace(/\{\{([^}]+)\}\}/g, '')
+    const baseImageBuffer = await sharp(Buffer.from(baseSvg))
+      .resize(1200, 630)
+      .png()
+      .toBuffer()
+    baseImages.set(options.ogTemplate, baseImageBuffer)
+  }
+
   mkdirSync(dirname(output), { recursive: true })
 
   const lines = title
@@ -42,10 +52,44 @@ export async function generateOgImage(
     line3: lines[2] ? escapeHtml(lines[2]) : '',
   }
 
-  const svg = ogTemplate.replace(/\{\{([^}]+)\}\}/g, (_, name) => data[name] || '')
+  const textOnlySvg = createTextLayerSvg(ogTemplate, data)
 
-  await sharp(Buffer.from(svg))
+  const textLayerBuffer = await sharp(Buffer.from(textOnlySvg))
     .resize(1200, 630)
     .png()
+    .toBuffer()
+
+  const baseImageBuffer = baseImages.get(options.ogTemplate)!
+  await sharp(baseImageBuffer)
+    .composite([{
+      input: textLayerBuffer,
+      blend: 'over',
+    }])
+    .png()
     .toFile(output)
+}
+
+function createTextLayerSvg(template: string, data: Record<string, string>): string {
+  let textSvg = template.replace(/\{\{([^}]+)\}\}/g, (_, name) => data[name] || '')
+
+  textSvg = textSvg
+
+    .replace(/<rect[^>]*\/>/g, '')
+    .replace(/<rect[^>]*>[\s\S]*?<\/rect>/g, '')
+
+    .replace(/<pattern[^>]*>[\s\S]*?<\/pattern>/g, '')
+
+    .replace(/<linearGradient[^>]*>[\s\S]*?<\/linearGradient>/g, '')
+
+    .replace(/<clipPath[^>]*>[\s\S]*?<\/clipPath>/g, '')
+
+    .replace(/<image[^>]*\/>/g, '')
+    .replace(/<image[^>]*>[\s\S]*?<\/image>/g, '')
+
+  textSvg = textSvg.replace(
+    /<svg([^>]*)>/,
+    '<svg$1 style="background: transparent;">',
+  )
+
+  return textSvg
 }
