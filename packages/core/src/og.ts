@@ -5,7 +5,7 @@ import { dirname } from 'node:path'
 import sharp from 'sharp'
 
 const templates = new Map<string, string>()
-const baseImages = new Map<string, Buffer>()
+const baseImages = new Map<string, Promise<Buffer>>()
 
 function escapeHtml(unsafe: string) {
   return unsafe
@@ -32,7 +32,7 @@ export async function generateOgImage(
 
   if (!baseImages.has(options.ogTemplate)) {
     const baseSvg = ogTemplate.replace(/\{\{([^}]+)\}\}/g, '')
-    const baseImageBuffer = await sharp(Buffer.from(baseSvg))
+    const baseImageBuffer = sharp(Buffer.from(baseSvg))
       .resize(1200, 630)
       .png()
       .toBuffer()
@@ -59,7 +59,7 @@ export async function generateOgImage(
     .png()
     .toBuffer()
 
-  const baseImageBuffer = baseImages.get(options.ogTemplate)!
+  const baseImageBuffer = await baseImages.get(options.ogTemplate)!
   await sharp(baseImageBuffer)
     .composite([{
       input: textLayerBuffer,
