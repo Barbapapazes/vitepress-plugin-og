@@ -41,10 +41,10 @@
   },
   "dependencies": {
     "sharp": "^0.34.5",
-    "ufo": "^1.6.1"
+    "ufo": "^1.6.4"
   },
   "devDependencies": {
-    "tsdown": "^0.16.6",
-    "vitest": "^4.0.12"
+    "tsdown": "^0.22.0",
+    "vitest": "^4.1.6"
   }
 }
