@@ -40,11 +40,11 @@
     "vitepress": "^1.6.4"
   },
   "dependencies": {
-    "sharp": "^0.34.5",
-    "ufo": "^1.6.1"
+    "sharp": "^0.35.5",
+    "ufo": "^1.6.4"
   },
   "devDependencies": {
-    "tsdown": "^0.16.6",
-    "vitest": "^4.0.12"
+    "tsdown": "^0.23.0",
+    "vitest": "^4.1.11"
   }
 }

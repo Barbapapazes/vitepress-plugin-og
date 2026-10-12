@@ -2,7 +2,7 @@
   "type": "module",
   "version": "0.0.5",
   "private": true,
-  "packageManager": "pnpm@10.22.0+sha512.bf049efe995b28f527fd2b41ae0474ce29186f7edcb3bf545087bd61fbbebb2bf75362d1307fda09c2d288e1e499787ac12d4fcb617a974718a6051f2eee741c",
+  "packageManager": "pnpm@10.34.6+sha512.7e1ae66a83a9143c118cc1944f37cc4f2b8acddeda4b001cfa78908f6e46e45e15292739ca6c9d026426cc757e9318cc98c5551d6a16c165097b0028ba87b4e6",
   "scripts": {
     "lint": "eslint",
     "lint:fix": "eslint --fix",
@@ -11,12 +11,12 @@
     "release": "bumpp"
   },
   "devDependencies": {
-    "@antfu/eslint-config": "^6.2.0",
-    "@tsconfig/node20": "^20.1.8",
-    "@types/node": "^24.10.1",
-    "bumpp": "^10.3.1",
-    "eslint": "^9.38.0",
-    "taze": "^19.9.0",
+    "@antfu/eslint-config": "^6.7.3",
+    "@tsconfig/node20": "^20.1.10",
+    "@types/node": "^24.19.1",
+    "bumpp": "^10.4.1",
+    "eslint": "^9.39.5",
+    "taze": "^19.17.2",
     "typescript": "^5.9.3"
   }
 }
