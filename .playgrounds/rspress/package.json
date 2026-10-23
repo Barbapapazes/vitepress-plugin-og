@@ -11,6 +11,6 @@
     "rspress-plugin-og": "link:../../packages/rspress-plugin-og"
   },
   "devDependencies": {
-    "@types/node": "^18.11.17"
+    "@types/node": "^24.19.2"
   }
 }
