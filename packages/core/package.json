@@ -5,9 +5,9 @@
     "test": "vitest"
   },
   "dependencies": {
-    "sharp": "^0.34.5"
+    "sharp": "^0.35.5"
   },
   "devDependencies": {
-    "vitest": "^4.0.12"
+    "vitest": "^4.1.12"
   }
 }
