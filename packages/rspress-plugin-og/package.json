@@ -37,7 +37,7 @@
     "prepack": "pnpm run build"
   },
   "peerDependencies": {
-    "@rspress/shared": "^1.47.2",
+    "@rspress/shared": "^2.0.23",
     "rspress": "^1.47.2"
   },
   "dependencies": {
@@ -46,6 +46,6 @@
   },
   "devDependencies": {
     "tsdown": "^0.23.1",
-    "vitest": "^4.1.12"
+    "vitest": "^5.0.5"
   }
 }
